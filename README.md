@@ -8,11 +8,52 @@ Getting started with this decoder is simple
 ```javascript
 const decoder = require('pcm-decoder');
 
-const decodedData = decoder(myBuffer).then((data) => {
+const decodedData = decoder(buffer).then((data) => {
     // TODO Send or modify the decoded audio data
 }, (error) => {
     // TODO Handle the error accordingly
 });
+```
+
+### React Example
+```typescript
+/* React imports ... */
+import { decoder } from 'pcm-decoder';
+
+export default decodeAudio = () => {
+    const [ recorder, setRecorder ] = useState(null);
+    const [ recording, setRecording ] = useState(false);
+
+    const handleCapture = (event) => {
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(event.data);
+
+        // This is extremely important so you are not getting null data
+        reader.onloadend = () => {
+            decoder(reader.result as ArrayBuffer).then((buffer) => {
+                // Handle converted data as you would like
+            }, (error) => {
+                console.log(`Failed to decode with error ${ error }.`);
+            });
+        }
+    }
+
+    const handleRecording = () => {
+        if (recording) {
+            return;
+        }
+
+        navigator.mediaDevices.getUserMedia({ audio: { sampleRate: 8000 } })
+            .then((stream: MediaStream) => {
+                console.log("Media Stream Established");
+
+                setRecorder(new MediaRecorder(stream));
+                recorder.ondataavailable = handleCapture;
+                recorder.start(1000);                       // 1 second intervals
+            });
+    };
+};
+
 ```
 
 ### API
@@ -20,3 +61,9 @@ Decodes `buffer` and resolves to a promise. The source currently supports *Array
 
 ### Supported codecs
  - wav
+
+### Contributors
+SGEhren-dev (Creator)
+
+### License
+MIT
