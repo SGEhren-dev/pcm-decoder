@@ -43,6 +43,8 @@ export default decodeAudio = () => {
             return;
         }
 
+        setRecording(true);
+
         navigator.mediaDevices.getUserMedia({ audio: { sampleRate: 8000 } })
             .then((stream: MediaStream) => {
                 console.log("Media Stream Established");
@@ -52,6 +54,10 @@ export default decodeAudio = () => {
                 recorder.start(1000);                       // 1 second intervals
             });
     };
+
+    return {
+        // UI code will go here to trigger recording (button with onClick to trigger handleRecording)
+    }
 };
 
 ```
