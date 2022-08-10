@@ -1,4 +1,4 @@
-# pcm-decoder
+# pcm-decoder [![unstable](https://img.shields.io/badge/stability-unstable-green.svg)](http://github.com/badges/stability-badges)
 I created this decoder to allow me to convert data from a WAV file to raw PCM data to send to DVR's that used PCM data. 
 Feel free to use it as you see fit and even build onto it! There will be more files supported in the near future.
 
